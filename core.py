@@ -1,11 +1,11 @@
+import os
 import bs4
 import requests
-import os
 
 
 def start():
     path = '/Users/kirill201/Desktop/тест'
-    cars_urls = pagen_cars(2, [30213], 2020)
+    cars_urls = pagen_cars(2, ["30262"], 2020)
     if len(cars_urls) == 0:
         print('Пусто, таких тачек нет')
         return
@@ -14,6 +14,7 @@ def start():
         os.mkdir(fullpath)
         print(car)
         download_photo(car, fullpath)
+
 def download_photo(url, fullpath):
     response = requests.get(url)
     soup = bs4.BeautifulSoup(response.content, 'lxml')
