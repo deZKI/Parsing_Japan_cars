@@ -4,11 +4,12 @@ import requests
 from cars import MODELS
 from cars import MARKERS
 
-def start(marker, model, year, path, page=0):
+def start_search(marker, model, year, path, page=0):
     if marker not in MARKERS:
         return "Нет такой марки или ввели корректно, проверьте по сайту"
     if model not in MODELS[marker]:
         return "Нет такой модели или ввели корректно, проверьте по сайту"
+    print(MODELS.keys())
     cars_urls = pagen_cars(MARKERS[marker], MODELS[marker][model], year, page)
     if len(cars_urls) == 0:
         return ('Пусто, таких тачек нет', f"https://kakaku.com/kuruma/used/spec/Maker={MARKERS[marker]}/Model={MODELS[marker][model]}/AgeType={year}/Page={page}")
@@ -17,7 +18,7 @@ def start(marker, model, year, path, page=0):
         os.mkdir(fullpath)
         print(i,":", car)
         download_photo(car, fullpath)
-    return 1
+    return len(cars_urls)
 
 def download_photo(url, fullpath):
     response = requests.get(url)
