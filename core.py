@@ -1,25 +1,31 @@
 import os
 import bs4
 import requests
+from cars import MODELS
+from cars import MARKERS
 
-
-def start():
-    path = '/Users/kirill201/Desktop/тест'
-    cars_urls = pagen_cars(2, ["30262"], 2020)
+def start(marker, model, year, path, page=0):
+    if marker not in MARKERS:
+        return "Нет такой марки или ввели корректно, проверьте по сайту"
+    if model not in MODELS[marker]:
+        return "Нет такой модели или ввели корректно, проверьте по сайту"
+    cars_urls = pagen_cars(MARKERS[marker], MODELS[marker][model], year, page)
     if len(cars_urls) == 0:
-        print('Пусто, таких тачек нет')
-        return
+        return ('Пусто, таких тачек нет', f"https://kakaku.com/kuruma/used/spec/Maker={MARKERS[marker]}/Model={MODELS[marker][model]}/AgeType={year}/Page={page}")
     for i, car in enumerate(cars_urls):
-        fullpath = os.path.join(path, str(i))
+        fullpath = os.path.join(path,car.split('/')[-2])
         os.mkdir(fullpath)
-        print(car)
+        print(i,":", car)
         download_photo(car, fullpath)
+    return 1
 
 def download_photo(url, fullpath):
     response = requests.get(url)
     soup = bs4.BeautifulSoup(response.content, 'lxml')
     main = soup.find('ul', class_='thumbImgList').find_all('img')
     for i, photo in enumerate(main):
+        if "https://movie1.goo-net.com/" in photo['src'] or "https://img1.kakaku.k-img.com" in photo['src']:
+            continue
         response = requests.get(photo['src'])
         img = open(f'{fullpath}/img{i}.png', 'wb')
         img.write(response.content)
@@ -28,11 +34,10 @@ def download_photo(url, fullpath):
 
 
 
-def pagen_cars(mark, models, age):  # можно генератор замутить
-    fmodels = str(models[0])
-    for i in models[1:]:
-        fmodels = fmodels + ',' + str(i)
-    url = f"https://kakaku.com/kuruma/used/spec/Maker={mark}/Model={fmodels}/AgeType={age}/"
+def pagen_cars(mark, models, age, pagen):  # можно генератор замутить
+    # for i in models[1:]:
+    #     fmodels = fmodels + ',' + str(i)
+    url = f"https://kakaku.com/kuruma/used/spec/Maker={mark}/Model={models}/AgeType={age}/Page={pagen}"
     print(url)
     response = requests.get(url)
     soup = bs4.BeautifulSoup(response.content, 'lxml')
