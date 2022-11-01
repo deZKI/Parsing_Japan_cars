@@ -249,6 +249,7 @@ class Example(Frame):
 
 
 MARKERS = {
+    "-":"",
     "TOYOTA": "1",
     "LEXUS": "10",
     "NISSAN": "3",
@@ -321,6 +322,9 @@ MARKERS = {
     "OTHER IMPORTED CARS": "61"
 }
 MODELS = {
+    "-":{
+        "-":""
+    },
     "TOYOTA": {
         "-": "",
         "ISIS": "30014",
