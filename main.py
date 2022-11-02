@@ -23,6 +23,8 @@ def start_search(marker, model="", year="", transmission="", drive="", fuel="", 
 def download_photo(url, fullpath):
     response = requests.get(url)
     soup = bs4.BeautifulSoup(response.content, 'lxml')
+    # info = soup.find('div', 'itemBoxCell info c-box-regularBox')
+    # print(info)
     main = soup.find('ul', class_='thumbImgList').find_all('img')
     for i, photo in enumerate(main):
         if "https://movie1.goo-net.com/" in photo['src'] or "https://img1.kakaku.k-img.com" in photo['src']:
@@ -98,7 +100,7 @@ class Example(Frame):
         self.text_transission.place(x=0, y=340, width=350, height=24)
         self.make_transmission()
 
-        self.text_drive = Label(text='ПРИВОД', font="ARIAL 15")
+        self.text_drive = Label(text='Привод', font="ARIAL 15")
         self.text_drive.place(x=0, y=410, width=350, height=24)
         self.make_drive()
 
@@ -195,22 +197,22 @@ class Example(Frame):
         self.fuels = []
         for i in range(6):
             self.fuels.append(StringVar())
-        self.fuel_gasoline = Checkbutton(text='gas', variable=self.fuels[0], onvalue=1, offvalue="")
-        self.fuel_gasoline.place(x=0, y=490, width=50, height=30)
+        self.fuel_gasoline = Checkbutton(text='бензин', variable=self.fuels[0], onvalue=1, offvalue="")
+        self.fuel_gasoline.place(x=0, y=490, width=70, height=30)
 
-        self.fuel_hybrid = Checkbutton(text='diesel', variable=self.fuels[1], onvalue=2, offvalue="")
-        self.fuel_hybrid.place(x=60, y=490, width=60, height=30)
+        self.fuel_hybrid = Checkbutton(text='дизель', variable=self.fuels[1], onvalue=2, offvalue="")
+        self.fuel_hybrid.place(x=80, y=490, width=70, height=30)
 
-        self.fuel_hydrogen = Checkbutton(text='others', variable=self.fuels[2], onvalue=3, offvalue="")
-        self.fuel_hydrogen.place(x=130, y=490, width=80, height=30)
+        self.fuel_hydrogen = Checkbutton(text='другие', variable=self.fuels[2], onvalue=3, offvalue="")
+        self.fuel_hydrogen.place(x=150, y=490, width=80, height=30)
 
-        self.fuel_diesel = Checkbutton(text='hybrid', variable=self.fuels[3], onvalue=4, offvalue="")
-        self.fuel_diesel.place(x=220, y=490, width=60, height=30)
+        self.fuel_diesel = Checkbutton(text='гибрид', variable=self.fuels[3], onvalue=4, offvalue="")
+        self.fuel_diesel.place(x=240, y=490, width=70, height=30)
 
-        self.fuel_electricity = Checkbutton(text='electricity', variable=self.fuels[4], onvalue=5, offvalue="")
+        self.fuel_electricity = Checkbutton(text='электро', variable=self.fuels[4], onvalue=5, offvalue="")
         self.fuel_electricity.place(x=0, y=530, width=90, height=30)
 
-        self.fuel_others = Checkbutton(text='hydrogen', variable=self.fuels[5], onvalue=6, offvalue="")
+        self.fuel_others = Checkbutton(text='водород', variable=self.fuels[5], onvalue=6, offvalue="")
         self.fuel_others.place(x=100, y=530, width=80, height=30)
 
     def make_handle(self):
