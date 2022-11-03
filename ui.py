@@ -24,7 +24,7 @@ class Example(Frame):
         self.text_model = Label(text='Модель', font="ARIAL 15")
         self.text_model.place(x=0, y=44, width=350, height=24)
 
-        self.model = OptionMenu(self.parent, self.clickedModel, 'NONE')
+        self.model = OptionMenu(self.parent, self.clickedModel, '-')
         self.model.place(x=0, y=70, width=350, height=24)
 
         self.text_year = Label(text='Год', font="ARIAL 15")
@@ -196,13 +196,13 @@ class Example(Frame):
                                  MARKERS[self.clickedMarker.get()],
                                  MODELS[self.clickedMarker.get()][self.clickedModel.get()], self.year.get().upper(),
                                  transmission,
-                                 format(self.drive), format(self.fuels), format(self.colors), format(self.streering),
+                                 form(self.drive), form(self.fuels), form(self.colors), form(self.streering),
                                  self.page.get(), self.root.get()
                              ), daemon=True)
         a.start()
 
 
-def format(iterator):
+def form(iterator):
     s = ""
     for i in iterator:
         if i.get() != "":
