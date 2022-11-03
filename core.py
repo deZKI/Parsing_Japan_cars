@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 import bs4
 import requests
-
+import threading
 
 def start_search(marker, model="", year="", transmission="", drive="", fuel="", color="", steering="", page=1,
                  path=""):
@@ -16,7 +16,8 @@ def start_search(marker, model="", year="", transmission="", drive="", fuel="", 
         try:
             os.mkdir(fullpath)
         except FileExistsError:
-            msg = messagebox.showinfo('Ошибка', f'Машина была скачана{fullpath}')
+            a = threading.Thread(target=messagebox.showerror,args=('Ошибка', f'Машина была скачана{fullpath}'))
+            a.start()
             continue
         print(i, ":", car)
         download_photo(car, fullpath)

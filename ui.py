@@ -11,6 +11,8 @@ class Example(Frame):
         self.parent = parent
         self.clickedMarker = StringVar()
         self.clickedModel = StringVar()
+        self.clickedMarker.set('-')
+        self.clickedModel.set('-')
         self.start_search = start_search
         self.create_topic_menu()
 
@@ -60,6 +62,9 @@ class Example(Frame):
         self.text_handle.place(x=0, y=560, width=350, height=24)
         self.make_handle()
 
+        self.btn_find_topic = Button(text='Найти', command=self.download)
+        self.btn_find_topic.place(x=0, y=610, height=50, width=350)
+
         self.root = Entry()
         self.root.place(x=0, y=650, width=350, height=35)
 
@@ -67,8 +72,6 @@ class Example(Frame):
         self.model = OptionMenu(self.parent, self.clickedModel, *MODELS[self.clickedMarker.get()].keys())
         self.model.place(x=0, y=70, width=350, height=24)
 
-        self.btn_find_topic = Button(text='Найти', command=self.download)
-        self.btn_find_topic.place(x=0, y=610, height=50, width=350)
 
     def make_colors(self):
         self.colors = []
