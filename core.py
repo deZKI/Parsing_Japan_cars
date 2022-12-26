@@ -29,15 +29,16 @@ def download_photo(url, fullpath):
     soup = bs4.BeautifulSoup(response.content, 'lxml')
     # info = soup.find('div', 'itemBoxCell info c-box-regularBox')
     # print(info)
-    main = soup.find('ul', class_='thumbImgList').find_all('img')
-    for i, photo in enumerate(main):
-        if "https://movie1.goo-net.com/" in photo['src'] or "https://img1.kakaku.k-img.com" in photo['src']:
+    lists = soup.find('div', class_='thumbImgArea').find_all('img')
+    print(len(lists))
+    for i, photo in enumerate(lists):
+        print(i, photo['data-src'])
+        if "https://movie1.goo-net.com/" in photo['data-src'] or "https://img1.kakaku.k-img.com" in photo['data-src']:
             continue
-        response = requests.get(photo['src'])
+        response = requests.get(photo['data-src'])
         img = open(f'{fullpath}/img{i}.png', 'wb')
         img.write(response.content)
         img.close()
-        print(photo['src'])
 
 
 def pagen_cars(url):
